@@ -1,0 +1,147 @@
+/* Fixed header styling */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--surface-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 1rem 2rem;
+  font-family: "Poppins", sans-serif;
+  z-index: 1000;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.brand:hover {
+  color: var(--nav-hover-color);
+}
+
+/* Nav links desktop */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: var(--nav-color);
+  font-weight: 500;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent-color);
+  transition: width 0.3s;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--nav-hover-color);
+}
+
+/* Hamburger menu button */
+.burger {
+  display: none; /* Hidden by default, shown on mobile */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1100;
+}
+
+/* Base styling for the burger lines */
+.burger-line {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: var(
+    --nav-color
+  ); /* This ensures the burger lines use your defined --nav-color */
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* Animate burger to X when open */
+.burger-line.open:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger-line.open:nth-child(2) {
+  opacity: 0;
+}
+
+.burger-line.open:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Mobile menu styles */
+@media (max-width: 768px) {
+  .burger {
+    display: flex; /* Show burger button on small screens */
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 64px; /* height of header, adjust if your header height changes */
+    right: 0;
+    background-color: var(--surface-color);
+    height: calc(100vh - 64px);
+    width: 200px;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+    transform: translateX(100%); /* Initially off-screen */
+    transition: transform 0.3s ease;
+  }
+
+  .nav-links.active {
+    /* Slide in when the menu is active */
+    transform: translateX(0);
+  }
+
+  .nav-links a {
+    font-size: 1.2rem;
+  }
+}
+
+/* Push content down so it’s not hidden behind fixed header */
+.main-content {
+  padding-top: 64px; /* Adjust this value if your header's height changes */
+}

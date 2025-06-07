@@ -1,1 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+/* Your provided CSS */
+/* src/styles.css */
+:root {
+  --background-color: #ffffff;
+  --default-color: #1a1f24;
+  --heading-color: #485664;
+  --accent-color: #0ea2bd;
+  --surface-color: #ffffff;
+  --contrast-color: #ffffff;
+
+  --nav-color: #485664;
+  --nav-hover-color: #0ea2bd;
+  --nav-mobile-background-color: #ffffff;
+  --nav-dropdown-background-color: #ffffff; /* Not used in this basic header but good to keep */
+  --nav-dropdown-color: #485664;
+  --nav-dropdown-hover-color: #0ea2bd;
+
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif; /* Basic font */
+  background-color: var(--background-color);
+  color: var(--default-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.light-background {
+  --background-color: #eef0f2;
+  --surface-color: #ffffff;
+}
+
+.dark-background {
+  --background-color: #3a4753;
+  --default-color: #ffffff;
+  --heading-color: #ffffff;
+  --surface-color: #4f6171;
+  --contrast-color: #ffffff;
+}
