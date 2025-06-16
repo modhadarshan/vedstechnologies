@@ -1,0 +1,18 @@
+<div class="login-dialog">
+  <h2 class="title">🔐 Login to Trade Panel</h2>
+  <form (ngSubmit)="login()">
+    <input matInput [(ngModel)]="email" name="email" required type="email" />
+
+    <input
+      matInput
+      [(ngModel)]="password"
+      name="password"
+      required
+      type="password"
+    />
+
+    <button mat-flat-button color="primary" class="glow-btn" type="submit">
+      Login
+    </button>
+  </form>
+</div>

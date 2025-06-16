@@ -1,4 +1,4 @@
-# vedstechnologies
+# VedstechHub
 
 # Founder MR.Vanraj Bhutiya
 
