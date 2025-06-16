@@ -2,4 +2,4 @@
 
 # Founder MR.Vanraj Bhutiya
 
-# Co-Founder MR.Dharsan Modha
+# Co-Founder MR.Darshan Modha
