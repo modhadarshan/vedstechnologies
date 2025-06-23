@@ -1,0 +1,8 @@
+<!-- HTML template for the VideoGrid component, responsible for the grid layout. -->
+<!-- It uses Tailwind CSS grid classes for responsive layout. -->
+<div
+  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4"
+>
+  <!-- Iterates over the 'videos' input array and renders a VideoCardComponent for each video -->
+  <app-video-card *ngFor="let video of videos" [video]="video"></app-video-card>
+</div>

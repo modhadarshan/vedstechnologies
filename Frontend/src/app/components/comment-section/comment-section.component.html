@@ -1,0 +1,57 @@
+<!-- // src/app/components/comment-section/comment-section.component.html -->
+<!-- HTML template for the CommentSection component. -->
+<!-- It displays an input for new comments and a list of existing comments. -->
+<div class="mt-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+  <h2 class="text-xl font-bold mb-4">{{ comments.length }} Comments</h2>
+
+  <!-- Input section for adding a new comment (visible only if authenticated) -->
+  <div
+    *ngIf="isAuthenticated$ | async"
+    class="flex items-center space-x-3 mb-6"
+  >
+    <img
+      src="https://placehold.co/40x40/cccccc/ffffff?text=U"
+      alt="User Avatar"
+      class="w-10 h-10 rounded-full object-cover"
+    />
+    <div class="flex-1">
+      <input
+        type="text"
+        [(ngModel)]="newCommentContent"
+        placeholder="Add a comment..."
+        class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+      />
+    </div>
+    <button
+      (click)="submitComment()"
+      [disabled]="!newCommentContent.trim()"
+      class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      Comment
+    </button>
+  </div>
+  <!-- Message to log in if not authenticated -->
+  <div
+    *ngIf="!(isAuthenticated$ | async)"
+    class="mb-6 text-center text-gray-600 dark:text-gray-400"
+  >
+    <p>
+      Please
+      <a routerLink="/login" class="text-blue-500 hover:underline">log in</a> to
+      add comments.
+    </p>
+  </div>
+
+  <!-- List of Comments -->
+  <div class="space-y-6">
+    <!-- Iterates over the top-level comments and renders a CommentComponent for each. -->
+    <!-- `[mainVideoId]="videoId"` passes the current video's ID down to each comment. -->
+    <!-- `(replyAdded)="onReplyAdded()"` listens for replies from child components. -->
+    <app-comment
+      *ngFor="let comment of comments"
+      [comment]="comment"
+      [mainVideoId]="videoId"
+      (replyAdded)="onReplyAdded()"
+    ></app-comment>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<!-- HTML template for the Home component, displaying a grid of videos. -->
+<div class="p-4">
+  <app-video-grid [videos]="videos"></app-video-grid>
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="flex justify-center items-center py-4">
+    <div
+      class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500"
+    ></div>
+    <span class="ml-2 text-gray-600 dark:text-gray-400"
+      >Loading more videos...</span
+    >
+  </div>
+  <!-- Message when all videos are loaded -->
+  <div
+    *ngIf="!hasMoreVideos && videos.length > 0 && !isLoading"
+    class="text-center text-gray-500 dark:text-gray-400 py-4"
+  >
+    You've reached the end of the videos.
+  </div>
+  <!-- Message when no videos are available -->
+  <div
+    *ngIf="!isLoading && videos.length === 0"
+    class="text-center text-gray-500 dark:text-gray-400 py-4"
+  >
+    No videos available.
+  </div>
+</div>

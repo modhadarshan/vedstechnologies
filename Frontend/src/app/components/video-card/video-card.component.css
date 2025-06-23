@@ -1,0 +1,9 @@
+/* // src/app/components/video-card/video.component.css */
+/* Styling specific to the VideoCard component. */
+/* Ensures the title text is truncated to 2 lines with an ellipsis. */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

@@ -1,0 +1,39 @@
+/* // src/app/app.component.css */
+/* Global CSS styles for the application. Tailwind CSS is primarily used, */
+/* but this file can contain custom global styles or overrides. */
+/* Base styles for the light theme */
+body {
+  @apply bg-white text-gray-900;
+}
+
+/* Base styles for the dark theme */
+body.dark {
+  @apply bg-gray-900 text-white;
+}
+
+/* Ensure smooth transitions for layout changes, especially for sidebar toggle */
+main {
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* Custom scrollbar styling for better aesthetics in both light and dark modes */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+  @apply dark:bg-gray-800; /* Dark mode background for track */
+  border-radius: 5px; /* Rounded corners for the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  @apply dark:bg-gray-600; /* Dark mode background for thumb */
+  border-radius: 5px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar thumb on hover */
+  @apply dark:bg-gray-500; /* Dark mode background for thumb on hover */
+}

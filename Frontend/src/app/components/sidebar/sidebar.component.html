@@ -1,0 +1,221 @@
+<!-- // src/app/components/sidebar/sidebar.component.html -->
+<!-- HTML template for the Sidebar component. -->
+<!-- It uses Tailwind CSS for layout and dynamic classes for responsiveness. -->
+<aside
+  [ngClass]="{
+    'w-64': isOpen,
+    'w-20': !isOpen,
+    'translate-x-0': isOpen,
+    '-translate-x-full sm:translate-x-0': !isOpen
+  }"
+  class="fixed h-full bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white shadow-lg transition-all duration-300 ease-in-out z-20 sm:relative sm:shadow-none"
+>
+  <div class="overflow-y-auto h-full p-4 pt-20">
+    <!-- Added pt-20 to account for fixed navbar height -->
+    <nav class="space-y-2">
+      <!-- Home Link -->
+      <a
+        routerLink="/"
+        routerLinkActive="bg-red-200 dark:bg-red-700 text-red-800 dark:text-white"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="flex items-center rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+      >
+        <svg
+          class="w-6 h-6 flex-shrink-0"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+          ></path>
+        </svg>
+        <span
+          [ngClass]="{ 'ml-3': isOpen, hidden: !isOpen }"
+          class="whitespace-nowrap overflow-hidden text-ellipsis"
+          >Home</span
+        >
+      </a>
+
+      <!-- Subscriptions (only if authenticated) -->
+      <ng-container *ngIf="authService.isAuthenticated$ | async">
+        <a
+          routerLink="/subscriptions"
+          routerLinkActive="bg-red-200 dark:bg-red-700 text-red-800 dark:text-white"
+          class="flex items-center rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+        >
+          <svg
+            class="w-6 h-6 flex-shrink-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h.01M19 18h.01M5 21h.01M19 21h.01M16 4h.01"
+            ></path>
+          </svg>
+          <span
+            [ngClass]="{ 'ml-3': isOpen, hidden: !isOpen }"
+            class="whitespace-nowrap overflow-hidden text-ellipsis"
+            >Subscriptions</span
+          >
+        </a>
+      </ng-container>
+
+      <!-- History (optional) -->
+      <a
+        routerLink="/history"
+        routerLinkActive="bg-red-200 dark:bg-red-700 text-red-800 dark:text-white"
+        class="flex items-center rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+      >
+        <svg
+          class="w-6 h-6 flex-shrink-0"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <span
+          [ngClass]="{ 'ml-3': isOpen, hidden: !isOpen }"
+          class="whitespace-nowrap overflow-hidden text-ellipsis"
+          >History</span
+        >
+      </a>
+
+      <!-- Upload Video (only if authenticated) -->
+      <ng-container *ngIf="authService.isAuthenticated$ | async">
+        <a
+          routerLink="/upload"
+          routerLinkActive="bg-red-200 dark:bg-red-700 text-red-800 dark:text-white"
+          class="flex items-center rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+        >
+          <svg
+            class="w-6 h-6 flex-shrink-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+            ></path>
+          </svg>
+          <span
+            [ngClass]="{ 'ml-3': isOpen, hidden: !isOpen }"
+            class="whitespace-nowrap overflow-hidden text-ellipsis"
+            >Upload Video</span
+          >
+        </a>
+      </ng-container>
+
+      <!-- Liked Videos (only if authenticated) -->
+      <ng-container *ngIf="authService.isAuthenticated$ | async">
+        <a
+          routerLink="/liked-videos"
+          routerLinkActive="bg-red-200 dark:bg-red-700 text-red-800 dark:text-white"
+          class="flex items-center rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+        >
+          <svg
+            class="w-6 h-6 flex-shrink-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M14 10h4.764a2 2 0 011.897 2.753l-2.648 8.041A2 2 0 0115.752 22H5.5a2 2 0 01-2-2v-8a2 2 0 012-2h2.5L7 9m6 3h3m-3 3h3m-3 3h3"
+            ></path>
+          </svg>
+          <span
+            [ngClass]="{ 'ml-3': isOpen, hidden: !isOpen }"
+            class="whitespace-nowrap overflow-hidden text-ellipsis"
+            >Liked Videos</span
+          >
+        </a>
+      </ng-container>
+
+      <!-- Separator -->
+      <div class="border-t border-gray-300 dark:border-gray-700 my-2"></div>
+
+      <!-- More Categories (example links) -->
+      <h3
+        [ngClass]="{ 'ml-3': isOpen, hidden: !isOpen }"
+        class="text-sm font-semibold uppercase text-gray-500 dark:text-gray-400 mb-2"
+      >
+        Categories
+      </h3>
+      <a
+        routerLink="/category/gaming"
+        routerLinkActive="bg-red-200 dark:bg-red-700 text-red-800 dark:text-white"
+        class="flex items-center rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+      >
+        <svg
+          class="w-6 h-6 flex-shrink-0"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+          ></path>
+        </svg>
+        <span
+          [ngClass]="{ 'ml-3': isOpen, hidden: !isOpen }"
+          class="whitespace-nowrap overflow-hidden text-ellipsis"
+          >Gaming</span
+        >
+      </a>
+      <a
+        routerLink="/category/music"
+        routerLinkActive="bg-red-200 dark:bg-red-700 text-red-800 dark:text-white"
+        class="flex items-center rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+      >
+        <svg
+          class="w-6 h-6 flex-shrink-0"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 19V6l12-3v13M9 19c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2zm12 0c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2zM9 10l12-3"
+          ></path>
+        </svg>
+        <span
+          [ngClass]="{ 'ml-3': isOpen, hidden: !isOpen }"
+          class="whitespace-nowrap overflow-hidden text-ellipsis"
+          >Music</span
+        >
+      </a>
+      <!-- Add more categories as needed -->
+    </nav>
+  </div>
+</aside>

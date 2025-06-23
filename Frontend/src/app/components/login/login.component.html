@@ -1,0 +1,118 @@
+<!-- // src/app/components/login/login.component.html -->
+<!-- HTML template for the Login component. -->
+<!-- It uses Tailwind CSS for layout and styling, and Angular's reactive forms. -->
+<div
+  class="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300"
+>
+  <div
+    class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md"
+  >
+    <h2
+      class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-6"
+    >
+      Login
+    </h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="mb-4">
+        <label
+          for="email"
+          class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
+          >Email</label
+        >
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          [ngClass]="{
+            'border-red-500':
+              loginForm.controls['email'].invalid &&
+              (loginForm.controls['email'].dirty ||
+                loginForm.controls['email'].touched)
+          }"
+        />
+        <div
+          *ngIf="
+            loginForm.controls['email'].invalid &&
+            (loginForm.controls['email'].dirty ||
+              loginForm.controls['email'].touched)
+          "
+          class="text-red-500 text-xs italic mt-1"
+        >
+          <div *ngIf="loginForm.controls['email'].errors?.['required']">
+            Email is required.
+          </div>
+          <div *ngIf="loginForm.controls['email'].errors?.['email']">
+            Please enter a valid email.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <label
+          for="password"
+          class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
+          >Password</label
+        >
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          [ngClass]="{
+            'border-red-500':
+              loginForm.controls['password'].invalid &&
+              (loginForm.controls['password'].dirty ||
+                loginForm.controls['password'].touched)
+          }"
+        />
+        <div
+          *ngIf="
+            loginForm.controls['password'].invalid &&
+            (loginForm.controls['password'].dirty ||
+              loginForm.controls['password'].touched)
+          "
+          class="text-red-500 text-xs italic mt-1"
+        >
+          <div *ngIf="loginForm.controls['password'].errors?.['required']">
+            Password is required.
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="errorMessage"
+        class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+        role="alert"
+      >
+        <span class="block sm:inline">{{ errorMessage }}</span>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <button
+          type="submit"
+          [disabled]="loginForm.invalid || loading"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-200 w-full disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <span *ngIf="!loading">Log In</span>
+          <span *ngIf="loading" class="flex items-center justify-center">
+            <div
+              class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"
+            ></div>
+            Logging In...
+          </span>
+        </button>
+      </div>
+
+      <p class="text-center text-gray-700 dark:text-gray-300 text-sm mt-4">
+        Don't have an account?
+        <a
+          routerLink="/register"
+          class="text-blue-500 hover:text-blue-700 font-bold"
+          >Register here</a
+        >
+      </p>
+    </form>
+  </div>
+</div>

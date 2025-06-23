@@ -1,0 +1,196 @@
+<!-- // src/app/components/video-player/video-player.component.html -->
+<!-- HTML template for the VideoPlayer component. -->
+<!-- It displays the video, its details, and the comment section. -->
+<div
+  class="flex flex-col lg:flex-row p-4 gap-6 min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300"
+>
+  <!-- Left Side: Video Player and Details -->
+  <div class="flex-1 lg:w-2/3">
+    <!-- Loading indicator for video -->
+    <div
+      *ngIf="isLoadingVideo"
+      class="flex justify-center items-center h-96 bg-gray-200 dark:bg-gray-700 rounded-lg"
+    >
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"
+      ></div>
+      <p class="ml-4">Loading video...</p>
+    </div>
+
+    <!-- Error message if video loading fails -->
+    <div
+      *ngIf="errorLoadingVideo"
+      class="flex justify-center items-center h-96 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded-lg"
+    >
+      <p>{{ errorLoadingVideo }}</p>
+    </div>
+
+    <!-- Video Player section -->
+    <div
+      *ngIf="video && videoUrl && !isLoadingVideo"
+      class="bg-gray-900 rounded-lg overflow-hidden mb-4 shadow-xl"
+    >
+      <video
+        #videoPlayer
+        controls
+        class="w-full h-auto max-h-[70vh] object-contain rounded-lg"
+      >
+        <source [src]="videoUrl" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- Video details section -->
+    <div
+      *ngIf="video && !isLoadingVideo"
+      class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md"
+    >
+      <h1 class="text-2xl font-bold mb-2">{{ video.title }}</h1>
+      <div
+        class="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-4"
+      >
+        <div class="flex items-center space-x-4">
+          <span>{{ video.viewCount }} views</span>
+          <span>•</span>
+          <span>{{ video.createdAt | date : "mediumDate" }}</span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <!-- Like/Dislike button -->
+          <button
+            (click)="onLikeToggle()"
+            class="flex items-center space-x-2 p-2 rounded-full transition-colors duration-200"
+            [ngClass]="{
+              'text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900 hover:bg-blue-200 dark:hover:bg-blue-800':
+                isLiked,
+              'hover:bg-gray-200 dark:hover:bg-gray-700': !isLiked
+            }"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14 10h4.764a2 2 0 011.897 2.753l-2.648 8.041A2 2 0 0115.752 22H5.5a2 2 0 01-2-2v-8a2 2 0 012-2h2.5L7 9m6 3h3m-3 3h3m-3 3h3"
+              ></path>
+            </svg>
+            <span class="font-semibold">{{ likeCount }}</span>
+          </button>
+          <!-- Share button (placeholder) -->
+          <button
+            class="flex items-center space-x-2 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M18 16.07c-1.39-2.02-3.8-3.34-6.5-3.34-2.7 0-5.11 1.32-6.5 3.34-.1.14-.07.33.07.43.14.1.33.07.43-.07 1.3-1.89 3.6-3.13 6-3.13 2.4 0 4.7 1.24 6 3.13.1.14.29.17.43.07.14-.1.17-.29.07-.43zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM12 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zm0 4c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"
+              />
+            </svg>
+            <span>Share</span>
+          </button>
+          <!-- Save button (placeholder) -->
+          <button
+            class="flex items-center space-x-2 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18-5 2.18V5h10v13z"
+              />
+            </svg>
+            <span>Save</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Channel info and Subscribe button -->
+      <div
+        class="border-t border-b border-gray-200 dark:border-gray-700 py-4 mb-4 flex items-center space-x-4"
+      >
+        <img
+          src="https://placehold.co/48x48/cccccc/ffffff?text=CH"
+          alt="Channel Avatar"
+          class="w-12 h-12 rounded-full object-cover"
+        />
+        <div class="flex-1">
+          <h3 class="font-semibold text-lg">
+            {{ video.youtubeChannel?.name || "Unknown Channel" }}
+          </h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            {{ channelSubscriberCount }} subscribers
+          </p>
+        </div>
+        <!-- Hide subscribe button if it's the current user's channel -->
+        <!-- Fixed: Used `authService.currentUserValue?.youtubeChannel?.id` for direct comparison -->
+        <button
+          *ngIf="
+            (authService.isAuthenticated$ | async) &&
+            authService.currentUserValue?.youtubeChannel?.id !==
+              video.youtubeChannel?.id
+          "
+          (click)="onSubscribeToggle()"
+          [ngClass]="{
+            'bg-red-500 hover:bg-red-600 text-white': !isSubscribedToChannel,
+            'bg-gray-300 hover:bg-gray-400 text-gray-800 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600':
+              isSubscribedToChannel
+          }"
+          class="font-semibold py-2 px-4 rounded-full transition-colors duration-200"
+        >
+          {{ isSubscribedToChannel ? "Subscribed" : "Subscribe" }}
+        </button>
+      </div>
+
+      <!-- Video description box -->
+      <div
+        class="description-box bg-gray-50 dark:bg-gray-700 p-3 rounded-lg text-sm text-gray-800 dark:text-gray-300"
+      >
+        <p>{{ video.description }}</p>
+      </div>
+    </div>
+
+    <!-- Comment Section component -->
+    <app-comment-section
+      [videoId]="videoId"
+      [comments]="comments"
+      (commentAdded)="addComment()"
+    ></app-comment-section>
+  </div>
+
+  <!-- Right Side: Recommended Videos (placeholder for future implementation) -->
+  <div class="lg:w-1/3">
+    <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+      <h2 class="text-xl font-bold mb-4">Up Next</h2>
+      <div class="space-y-4">
+        <!-- Placeholder for recommended video cards -->
+        <div
+          *ngFor="let i of [1, 2, 3, 4, 5]"
+          class="flex items-start space-x-3"
+        >
+          <img
+            src="https://placehold.co/160x90/e0e0e0/ffffff?text=Rec"
+            alt="Recommended Video Thumbnail"
+            class="w-40 h-24 object-cover rounded-lg"
+          />
+          <div>
+            <h3 class="text-md font-semibold line-clamp-2">
+              Recommended Video Title {{ i }}
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Channel Name</p>
+            <p class="text-xs text-gray-500 dark:text-gray-500">
+              10K views • 2 days ago
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
